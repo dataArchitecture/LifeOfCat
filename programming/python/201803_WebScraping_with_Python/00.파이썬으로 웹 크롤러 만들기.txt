@@ -1,0 +1,8 @@
+책제목 : 파이썬으로 웹 크롤러 만들기
+지은이 : 라이언 미첼 저 / 한선용 역 
+출판사 : 한빛미디어
+출간일 : 2017년 01월 10일 전자책 출간 / 2016년 12월 01일 종이책 출간
+
+책 URL : https://ridibooks.com/v2/Detail?id=443000456
+예제소스 : http://www.hanbit.co.kr/src/2469
+└ 원작자 Github : https://github.com/REMitchell/python-scraping

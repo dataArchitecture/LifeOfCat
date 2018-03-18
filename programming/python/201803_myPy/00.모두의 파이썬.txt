@@ -1,0 +1,9 @@
+책제목 : 모두의 파이썬
+지은이 : 이승찬
+출판사 : 길벗
+출간일 : 2016년 05월 09일 전자책 출간
+
+책 URL : https://ridibooks.com/v2/Detail?id=754018304
+예제소스 : http://www.gilbut.co.kr/support/qnaList_test.aspx
+└ 검색어 : 모두의파이썬
+└ └ 붉은색 "다운받기" 클릭 / 예제소스 다운
