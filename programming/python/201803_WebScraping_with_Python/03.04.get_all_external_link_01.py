@@ -1,10 +1,7 @@
-# 내가 수집하려는 사이트는 어떤 곳이지? 몇 개만? 아니면 존재 조차 모르는 사이트도 방문해야 할까?
-# 크롤러가 특정 웹사이트에 도착하면 새 웹사이트를 찾아가야 할까? 아니면 현재 웹 사이트를 파고들어야 할까?
-# 특정 웹 사이트를 제외해야 하나? 비영어권도 탐색해야 하는가?
-# 특정 웹 사이트가 크롤러의 방문을 인지했을 경우에 나 자신을 법적으로 보호할 수 있을까?
+# 사이트 전체에서 외부 링크를 검색하고, 각 링크마다 메모를 남기고 싶을 때 (뭔 이야긴지??)
 
 from urllib.request import urlopen
-from urllib.parse import urlparse   ## 정오표 추가 라인
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import re
 import datetime
@@ -12,6 +9,9 @@ import random
 
 pages = set()
 random.seed(datetime.datetime.now())
+
+allExtLinks = set()
+allIntLinks = set()
 
 # 페이지에서 발견된 내부 링크를 모두 목록으로 만든다.
 def getInternalLinks(bsObj, includeUrl):
@@ -61,5 +61,31 @@ def followExternalOnly(startingSite):
     print('Random external link is: {}'.format(externalLink))
     followExternalOnly(externalLink)
 
+def getAllExternalLinks(siteUrl):
+    html = urlopen(siteUrl)
+    domain = '{}://{}'.format(urlparse(siteUrl).scheme,
+                              urlparse(siteUrl).netloc)
+    bsObj = BeautifulSoup(html, "html.parser")
+    internalLinks = getInternalLinks(bsObj, domain)
+    externalLinks = getExternalLinks(bsObj, domain)
 
-followExternalOnly("http://oreilly.com")
+    for link in externalLinks:
+        if link not in allExtLinks:
+            allExtLinks.add(link)
+            print(link)
+    for link in internalLinks:
+        if link == "/":
+            link = domain
+        elif link[0:2] == "//":
+            link = "http:" + link
+        elif link[0:1] == "/":
+            link = domain + link
+
+        if link not in allIntLinks:
+            print("About to get link: " + link)
+            allIntLinks.add(link)
+            getAllExternalLinks(link)
+
+
+domain = "http://oreilly.com"
+getAllExternalLinks(domain)
